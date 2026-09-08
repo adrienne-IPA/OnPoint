@@ -11,11 +11,33 @@
 <!-- ADRIENNE: add an og:image (1200x630) for link previews -->
 
 <!-- ===== TRACKING SLOT 1: META PIXEL ===== -->
-<!-- META PIXEL GOES HERE -->
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1586935472916432');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1586935472916432&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <!-- ===== TRACKING SLOT 2: KLAVIYO ===== -->
 <!-- <script async src="https://static.klaviyo.com/onsite/js/TRmcnc/klaviyo.js"></script> -->
-<!-- ===== TRACKING SLOT 3: GA4 / CLARITY ===== -->
-<!-- GA4 TAG GOES HERE -->
+<!-- ===== TRACKING SLOT 3: GA4 ===== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6JN2448CJ4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6JN2448CJ4');
+</script>
 
 <!-- A/B headline + CTA framework. Set FORCE_* to null for a 50/50 split, 'A' or 'B' to lock a winner. -->
 <script>
@@ -690,6 +712,14 @@
     a.setAttribute('href', h + (h.indexOf('?')>-1?'&':'?') + q);
   });
 })();
+/* Checkout click events: GA4 begin_checkout, Meta InitiateCheckout (if pixel present) */
+document.querySelectorAll('a.btn, a.sticky-btn').forEach(function(a){
+  a.addEventListener('click', function(){
+    var loc = a.id || (a.classList.contains('sticky-btn') ? 'sticky' : 'button');
+    try { if (window.gtag) gtag('event','begin_checkout',{currency:'USD',value:147,items:[{item_name:'OnPoint Fertility',price:147,quantity:1}],button_location:loc}); } catch(e){}
+    try { if (window.fbq) fbq('track','InitiateCheckout',{currency:'USD',value:147,content_name:'OnPoint Fertility'}); } catch(e){}
+  });
+});
 function toggleFaq(btn){
   var item = btn.closest('.faq-item'); var open = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
